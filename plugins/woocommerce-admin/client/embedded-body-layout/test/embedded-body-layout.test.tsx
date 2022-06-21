@@ -14,6 +14,19 @@ jest.mock( '@woocommerce/data', () => ( {
 		currentUserCan: jest.fn(),
 	} ),
 } ) );
+
+jest.mock( '@wordpress/data', () => ( {
+	...jest.requireActual( '@wordpress/data' ),
+	useSelect: jest.fn().mockReturnValue( {
+		getInstalledPlugins: () => [],
+		getSettings: () => ( {
+			general: {
+				woocommerce_default_country: 'US',
+			},
+		} ),
+	} ),
+} ) );
+
 jest.mock( '../../payments', () => ( {
 	PaymentRecommendations: ( {
 		page,
